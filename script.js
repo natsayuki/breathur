@@ -31,13 +31,14 @@ const methods = {
       setTimeout(function(){
         const vibrations = []
         if(!data.breathingIn){
-          for(let i = 0; i < data.breatheIn; i += 200){
+          for(let i = 0; i < data.breatheIn; i += .2){
             const vibTime = map(i, 0, data.breatheIn, 0, 200);
             vibrations.push(vibTime);
             vibrations.push(200 - vibTime);
           }
           vibrations.push(data.holdIn * 1000)
         }
+        console.log(vibrations);
         window.navigator.vibrate(vibrations);
         methods.breathe()
       }, 1000 * data.wholeTime);
