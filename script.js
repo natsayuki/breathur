@@ -31,7 +31,7 @@ const methods = {
       setTimeout(function(){
         const vibrations = []
         if(data.breathingIn){
-          for(int i = 0; i < data.breatheIn; i++){
+          for(let i = 0; i < data.breatheIn; i++){
             const vibTime = map(i, 0, data.breatheIn, 0, 1000);
             vibrations.push(vibTime);
             vibrations.push(1000 - vibTime);
