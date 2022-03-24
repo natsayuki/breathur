@@ -33,6 +33,12 @@ const methods = {
     } else {
       data.breatheTime = parseInt(data.breatheOut);
       data.wholeTime = parseInt(data.breatheOut) + parseInt(data.holdOut);
+      for(let i = 0; i < data.breatheOut; i += .2){
+        const vibTime = map(i, 0, data.breatheOut, 0, 200);
+        vibrations.push(200 - vibTime);
+        vibrations.push(vibTime);
+      }
+      vibrations.push(data.holdOut * 1000)
     }
     window.navigator.vibrate(vibrations);
     if(data.breathing || (!data.breathing && data.breathingIn)){
