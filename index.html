@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>breathur</title>
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="app">
+      <div
+        id="bubble"
+        :class="{'bubble-open': breathingIn, 'bubble-closed': !breathingIn}"
+        :style="{transition: `all ${breatheTime}s ease`, 'background-color': `${bubbleColor}`}"
+      ></div>
+      <div id="start-screen" v-if="!breathing">
+        <md-button @click="startBreathing()">begin</md-button>
+        <div>
+          <md-field>
+            <label>breathe in time</label>
+            <md-input v-model="breatheIn" type="number"></md-input>
+          </md-field>
+          <md-field>
+            <label>breathe in hold time</label>
+            <md-input v-model="holdIn" type="number"></md-input>
+          </md-field>
+          <md-field>
+            <label>breathe out time</label>
+            <md-input v-model="breatheOut" type="number"></md-input>
+          </md-field>
+          <md-field>
+            <label>breathe out hold time</label>
+            <md-input v-model="holdOut" type="number"></md-input>
+          </md-field>
+        </div>
+      </div>
+      <div id="stop-screen" v-if="breathing">
+        <md-button @click="breathing = false">stop</md-button>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-material@beta"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

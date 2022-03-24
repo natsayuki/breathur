@@ -1,0 +1,52 @@
+#bubble{
+  position: fixed;
+}
+
+.bubble-open{
+  width: 100vw;
+  height: 100vh;
+  top: 0px;
+  left: 0px;
+  border-radius: 0px;
+  opacity: 1;
+}
+
+.bubble-closed{
+  width: 0px;
+  height: 0px;
+  top: 50vh;
+  left: 50vw;
+  border-radius: 100%;
+  opacity: 0;
+}
+
+#start-screen, #stop-screen{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+}
+
+#start-screen{
+  justify-content: center;
+  align-items: center;
+}
+
+#stop-screen{
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
