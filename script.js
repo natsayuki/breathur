@@ -11,6 +11,8 @@ const data = {
   breathing: false,
   landscape: window.width > window.height,
   breatheTimeout: null,
+  vibrating: false,
+  vibratingReverse: false,
 }
 
 const map = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
@@ -32,8 +34,13 @@ const methods = {
       data.wholeTime = parseInt(data.breatheIn) + parseInt(data.holdIn);
       for(let i = 0; i < data.breatheIn; i += .2){
         const vibTime = map(i, 0, data.breatheIn, 0, 200);
-        vibrations.push(vibTime);
-        vibrations.push(200 - vibTime);
+        if(!data.vibratingReverse){
+          vibrations.push(vibTime);
+          vibrations.push(200 - vibTime);
+        } else {
+          vibrations.push(200 - vibTime);
+          vibrations.push(vibTime);
+        }
       }
       vibrations.push(data.holdIn * 1000)
     } else {
@@ -41,13 +48,18 @@ const methods = {
       data.wholeTime = parseInt(data.breatheOut) + parseInt(data.holdOut);
       for(let i = 0; i < data.breatheOut; i += .2){
         const vibTime = map(i, 0, data.breatheOut, 0, 200);
-        vibrations.push(200 - vibTime);
-        vibrations.push(vibTime);
+        if(!data.vibratingReverse){
+          vibrations.push(200 - vibTime);
+          vibrations.push(vibTime);
+        } else {
+          vibrations.push(vibTime);
+          vibrations.push(200 - vibTime);          
+        }
       }
       vibrations.push(0)
       vibrations.push(data.holdOut * 1000)
     }
-    window.navigator.vibrate(vibrations);
+    if(data.vibrating) window.navigator.vibrate(vibrations);
     if(data.breathing || (!data.breathing && data.breathingIn)){
       data.breatheTimeout = setTimeout(function(){
         methods.breathe()
