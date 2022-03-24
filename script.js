@@ -20,26 +20,23 @@ const methods = {
   },
   breathe(){
     data.breathingIn = !data.breathingIn;
+    const vibrations = [];
     if(data.breathingIn){
       data.breatheTime = parseInt(data.breatheIn);
       data.wholeTime = parseInt(data.breatheIn) + parseInt(data.holdIn);
+      for(let i = 0; i < data.breatheIn; i += .2){
+        const vibTime = map(i, 0, data.breatheIn, 0, 200);
+        vibrations.push(vibTime);
+        vibrations.push(200 - vibTime);
+      }
+      vibrations.push(data.holdIn * 1000)
     } else {
       data.breatheTime = parseInt(data.breatheOut);
       data.wholeTime = parseInt(data.breatheOut) + parseInt(data.holdOut);
     }
+    window.navigator.vibrate(vibrations);
     if(data.breathing || (!data.breathing && data.breathingIn)){
       setTimeout(function(){
-        const vibrations = []
-        if(!data.breathingIn){
-          for(let i = 0; i < data.breatheIn; i += .2){
-            const vibTime = map(i, 0, data.breatheIn, 0, 200);
-            vibrations.push(vibTime);
-            vibrations.push(200 - vibTime);
-          }
-          vibrations.push(data.holdIn * 1000)
-        }
-        console.log(vibrations);
-        window.navigator.vibrate(vibrations);
         methods.breathe()
       }, 1000 * data.wholeTime);
     }
