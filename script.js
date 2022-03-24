@@ -30,12 +30,13 @@ const methods = {
     if(data.breathing || (!data.breathing && data.breathingIn)){
       setTimeout(function(){
         const vibrations = []
-        if(data.breathingIn){
-          for(let i = 0; i < data.breatheIn; i++){
-            const vibTime = map(i, 0, data.breatheIn, 0, 1000);
+        if(!data.breathingIn){
+          for(let i = 0; i < data.breatheIn; i += 200){
+            const vibTime = map(i, 0, data.breatheIn, 0, 200);
             vibrations.push(vibTime);
-            vibrations.push(1000 - vibTime);
+            vibrations.push(200 - vibTime);
           }
+          vibrations.push(data.holdIn * 1000)
         }
         window.navigator.vibrate(vibrations);
         methods.breathe()
