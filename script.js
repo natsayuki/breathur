@@ -27,6 +27,7 @@ const methods = {
     }
     if(data.breathing || (!data.breathing && data.breathingIn)){
       setTimeout(function(){
+        window.navigator.vibrate(1000);
         methods.breathe()
       }, 1000 * data.wholeTime);
     }
