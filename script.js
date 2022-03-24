@@ -23,7 +23,7 @@ const methods = {
   stopBreathing(){
     data.breathing = false;
     clearTimeout(data.breatheTimeout);
-  }
+  },
   breathe(){
     data.breathingIn = !data.breathingIn;
     const vibrations = [];
