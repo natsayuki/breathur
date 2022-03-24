@@ -12,7 +12,7 @@
       <div
         id="bubble"
         :class="{'bubble-open': breathingIn, 'bubble-closed': !breathingIn}"
-        :style="{transition: `all ${breatheTime}s ease`, 'background-color': `${bubbleColor}`, width: `${breathingIn ? 200 : 0}${landscape ? 'vh' : 'vw'}`, height: `${breathingIn ? 200 : 0}${landscape ? 'vh' : 'vw'}`}"
+        :style="{transition: `all ${breatheTime}s ease`, 'background-color': `${bubbleColor}`}"
       ></div>
       <div id="start-screen" v-if="!breathing">
         <md-button @click="startBreathing()">begin</md-button>
