@@ -11,6 +11,8 @@ const data = {
   breathing: false,
 }
 
+const map = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
+
 const methods = {
   startBreathing(){
     data.breathing = true;
@@ -27,7 +29,15 @@ const methods = {
     }
     if(data.breathing || (!data.breathing && data.breathingIn)){
       setTimeout(function(){
-        window.navigator.vibrate(1000);
+        const vibrations = []
+        if(data.breathingIn){
+          for(int i = 0; i < data.breatheIn; i++){
+            const vibTime = map(i, 0, data.breatheIn, 0, 1000);
+            vibrations.push(vibTime);
+            vibrations.push(1000 - vibTime);
+          }
+        }
+        window.navigator.vibrate(vibrations);
         methods.breathe()
       }, 1000 * data.wholeTime);
     }
