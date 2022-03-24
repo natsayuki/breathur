@@ -10,6 +10,7 @@ const data = {
   breathingIn: false,
   breathing: false,
   landscape: window.width > window.height,
+  breatheTimeout: null;
 }
 
 const map = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
@@ -19,6 +20,10 @@ const methods = {
     data.breathing = true;
     methods.breathe();
   },
+  stopBreathing(){
+    data.breathing = false;
+    clearTimeout(data.breatheTimeout);
+  }
   breathe(){
     data.breathingIn = !data.breathingIn;
     const vibrations = [];
@@ -44,7 +49,7 @@ const methods = {
     }
     window.navigator.vibrate(vibrations);
     if(data.breathing || (!data.breathing && data.breathingIn)){
-      setTimeout(function(){
+      data.breatheTimeout = setTimeout(function(){
         methods.breathe()
       }, 1000 * data.wholeTime);
     }
