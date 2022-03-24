@@ -38,6 +38,7 @@ const methods = {
         vibrations.push(200 - vibTime);
         vibrations.push(vibTime);
       }
+      vibrations.push(0)
       vibrations.push(data.holdOut * 1000)
     }
     window.navigator.vibrate(vibrations);
