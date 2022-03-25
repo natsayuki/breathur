@@ -50,3 +50,9 @@
 .v-leave-to {
   opacity: 0;
 }
+
+.breath-text{
+height: 45%;
+width: 100%;
+text-align: center;
+}

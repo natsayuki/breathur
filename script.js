@@ -13,6 +13,9 @@ const data = {
   breatheTimeout: null,
   vibrating: false,
   vibratingReverse: false,
+  elapsed: 0,
+  timer: null,
+  holdingIn: false,
 }
 
 const map = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
@@ -21,9 +24,16 @@ const methods = {
   startBreathing(){
     data.breathing = true;
     methods.breathe();
+    data.timer = setInterval(function(){
+      data.elapsed++;
+    }, 1000)
   },
   stopBreathing(){
     data.breathing = false;
+    data.breathingIn = false;
+    data.bubbleOpen = false;
+    data.elapsed = 0;
+    clearInterval(data.timer)
     clearTimeout(data.breatheTimeout);
   },
   breathe(){
@@ -32,6 +42,9 @@ const methods = {
     if(data.breathingIn){
       data.breatheTime = parseInt(data.breatheIn);
       data.wholeTime = parseInt(data.breatheIn) + parseInt(data.holdIn);
+      setTimeout(function(){
+        data.holdingIn = true;
+      }, 1000 * parseInt(data.breatheIn));
       for(let i = 0; i < data.breatheIn; i += .2){
         const vibTime = map(i, 0, data.breatheIn, 0, 200);
         if(!data.vibratingReverse){
@@ -46,6 +59,9 @@ const methods = {
     } else {
       data.breatheTime = parseInt(data.breatheOut);
       data.wholeTime = parseInt(data.breatheOut) + parseInt(data.holdOut);
+      setTimeout(function(){
+        data.holdingIn = false;
+      }, 1000 * parseInt(data.breatheOut));
       for(let i = 0; i < data.breatheOut; i += .2){
         const vibTime = map(i, 0, data.breatheOut, 0, 200);
         if(!data.vibratingReverse){
@@ -53,7 +69,7 @@ const methods = {
           vibrations.push(vibTime);
         } else {
           vibrations.push(vibTime);
-          vibrations.push(200 - vibTime);          
+          vibrations.push(200 - vibTime);
         }
       }
       vibrations.push(0)

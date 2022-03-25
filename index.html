@@ -39,6 +39,10 @@
         </div>
       </div>
       <div id="stop-screen" v-if="breathing">
+        <div class="md-title breath-text" v-if="breathingIn && !holdingIn">breathe in</div>
+        <div class="md-title breath-text" v-if="breathingIn && holdingIn">hold</div>
+        <div class="md-title breath-text" v-if="!breathingIn && holdingIn">breathe out</div>
+        <div class="md-title breath-text" v-if="!breathingIn && !holdingIn">hold</div>
         <md-button @click="stopBreathing()">stop</md-button>
       </div>
     </div>
