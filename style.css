@@ -52,7 +52,28 @@
 }
 
 .breath-text{
-height: 45%;
-width: 100%;
-text-align: center;
+  height: 45%;
+  width: 100%;
+  text-align: center;
+}
+
+.start-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-wrapper > span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+.start-wrapper > span > .md-field{
+  max-width: 20vw;
+  min-width: 9rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }

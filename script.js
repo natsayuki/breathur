@@ -16,6 +16,9 @@ const data = {
   elapsed: 0,
   timer: null,
   holdingIn: false,
+  takeBPM: false,
+  showTime: false,
+  bpm: [],
 }
 
 const map = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
@@ -23,6 +26,8 @@ const map = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2
 const methods = {
   startBreathing(){
     data.breathing = true;
+    data.bpm = [];
+    data.elapsed = 0;
     methods.breathe();
     data.timer = setInterval(function(){
       data.elapsed++;
@@ -32,7 +37,6 @@ const methods = {
     data.breathing = false;
     data.breathingIn = false;
     data.bubbleOpen = false;
-    data.elapsed = 0;
     clearInterval(data.timer)
     clearTimeout(data.breatheTimeout);
   },
@@ -85,6 +89,30 @@ const methods = {
   }
 }
 
+const computed = {
+  averageBPM: function() {
+    const bpm = {};
+    data.bpm.forEach(beat => {
+      if(bpm[beat]) bpm[beat]++
+      else bpm[beat] = 1
+    });
+
+    let total = 0;
+    Object.keys(bpm).forEach(second => {
+      bpm[second] *= 60;
+      total += bpm[second];
+    });
+
+    return Math.round(total / data.elapsed);
+  }
+}
+
+document.addEventListener('mousedown', e => {
+  if(data.takeBPM){
+    data.bpm.push(data.elapsed);
+  }
+});
+
 
 Vue.use(VueMaterial.default);
 Vue.config.productionTip = false;
@@ -93,4 +121,5 @@ const vm = new Vue({
   el: '#app',
   data: data,
   methods: methods,
+  computed: computed,
 });

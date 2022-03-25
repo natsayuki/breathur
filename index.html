@@ -16,26 +16,39 @@
         :style="{transition: `all ${breatheTime}s ease`, 'background-color': `${bubbleColor}`}"
       ></div>
       <div id="start-screen" v-if="!breathing">
-        <md-button @click="startBreathing()">begin</md-button>
-        <div>
-          <md-field>
-            <label>breathe in time</label>
-            <md-input v-model="breatheIn" type="number"></md-input>
-          </md-field>
-          <md-field>
-            <label>breathe in hold time</label>
-            <md-input v-model="holdIn" type="number"></md-input>
-          </md-field>
-          <md-field>
-            <label>breathe out time</label>
-            <md-input v-model="breatheOut" type="number"></md-input>
-          </md-field>
-          <md-field>
-            <label>breathe out hold time</label>
-            <md-input v-model="holdOut" type="number"></md-input>
-          </md-field>
-          <md-checkbox v-model="vibrating">vibrating</md-checkbox>
-          <md-checkbox v-model="vibratingReverse" :disabled="!vibrating">reverse</md-checkbox>
+        <md-button @click="startBreathing()" class="md-primary md-raised">begin</md-button>
+        <div class="start-wrapper">
+          <span>
+            <md-field>
+              <label>breathe in time</label>
+              <md-input v-model="breatheIn" type="number"></md-input>
+            </md-field>
+            <md-field>
+              <label>breathe in hold time</label>
+              <md-input v-model="holdIn" type="number"></md-input>
+            </md-field>
+          </span>
+          <span>
+            <md-field>
+              <label>breathe out time</label>
+              <md-input v-model="breatheOut" type="number"></md-input>
+            </md-field>
+            <md-field>
+              <label>breathe out hold time</label>
+              <md-input v-model="holdOut" type="number"></md-input>
+            </md-field>
+          </span>
+          <span>
+            <md-checkbox v-model="vibrating">vibrating</md-checkbox>
+            <md-checkbox v-model="vibratingReverse" :disabled="!vibrating">reverse</md-checkbox>
+          </span>
+          <span>
+            <md-checkbox v-model="showTime">clock</md-checkbox>
+            <md-checkbox v-model="takeBPM">BPM</md-checkbox>
+          </span>
+          <span v-if="bpm.length > 0">
+            average BPM: {{averageBPM}}
+          </span>
         </div>
       </div>
       <div id="stop-screen" v-if="breathing">
@@ -43,7 +56,8 @@
         <div class="md-title breath-text" v-if="breathingIn && holdingIn">hold</div>
         <div class="md-title breath-text" v-if="!breathingIn && holdingIn">breathe out</div>
         <div class="md-title breath-text" v-if="!breathingIn && !holdingIn">hold</div>
-        <md-button @click="stopBreathing()">stop</md-button>
+        <div v-if="showTime">time: {{elapsed}}</div>
+        <md-button @click="stopBreathing()" class="md-accent md-raised">stop</md-button>
       </div>
     </div>
 
