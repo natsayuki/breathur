@@ -108,7 +108,7 @@ const computed = {
 }
 
 document.addEventListener('mousedown', e => {
-  if(data.takeBPM){
+  if(data.takeBPM && data.breathing){
     data.bpm.push(data.elapsed);
   }
 });
