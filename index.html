@@ -35,6 +35,7 @@
             <md-input v-model="holdOut" type="number"></md-input>
           </md-field>
           <md-checkbox v-model="vibrating">vibrating</md-checkbox>
+          <md-checkbox v-model="vibratingReverse" :disabled="!vibrating">reverse</md-checkbox>
         </div>
       </div>
       <div id="stop-screen" v-if="breathing">
